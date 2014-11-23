@@ -10,6 +10,6 @@ package moleTestProcedures;
  *
  * @author Mr. Mallory
  */
-public class IRSensorTest {
+public class UltrasonicSensorTest {
     
 }

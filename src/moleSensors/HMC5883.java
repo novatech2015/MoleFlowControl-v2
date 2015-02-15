@@ -12,7 +12,7 @@ import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 
 /**
- *
+ * I2C Magnetometer.
  * @author Mr. Mallory
  */
 public class HMC5883 {
@@ -22,6 +22,9 @@ public class HMC5883 {
     private short x_axis = 0, y_axis = 0, z_axis = 0;//Initializes variables
     private final short kGaussPerLSB = 1;//Scalar value for HMC5883L Output
     
+    /**
+     * Constructor.
+     */
     public HMC5883(){
         try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);//Connects the bus
@@ -39,6 +42,9 @@ public class HMC5883 {
         }
     }
     
+    /**
+     * Updates the registers on the I2C Magnetometer.
+     */    
     public void read(){
         try {
             byte[] buffer = new byte[6];//Declares a buffer which will hold the HMC5883L data
@@ -54,14 +60,26 @@ public class HMC5883 {
         }
     }
     
+    /**
+     * Returns the most current value from the magnetometer's x axis register since the read() function was called.
+     * @return The most current value from the magnetometer's x axis register.
+     */
     public short getX(){
         return x_axis;
     }
     
+    /**
+     * Returns the most current value from the magnetometer's y axis register since the read() function was called.
+     * @return The most current value from the magnetometer's y axis register.
+     */
     public short getY(){
         return y_axis;
     }
-        
+       
+     /**
+     * Returns the most current value from the magnetometer's z axis register since the read() function was called.
+     * @return The most current value from the magnetometer's z axis register.
+     */
     public short getZ(){
         return z_axis;
     }

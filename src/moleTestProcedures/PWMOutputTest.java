@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import moleActuators.PWMMotorController;
-import moleResources.moleInputManager;
-import static moleResources.moleResources.m_log;
+import moleResources.MoleInputManager;
+import static moleResources.MoleResources.m_log;
 
 /**
  *
@@ -29,7 +29,7 @@ public class PWMOutputTest {
     }
     
     public static void run(){
-        power = (double) moleInputManager.getLastValue();
+        power = (double) MoleInputManager.getLastValue();
         if(power == -128){
             testPWM.stop();
             power = 0;

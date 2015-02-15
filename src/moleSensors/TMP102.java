@@ -14,15 +14,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * I2C Thermometer.
  * @author Mr. Mallory
  */
 public class TMP102 {
     
     private I2CBus bus;//Declares the I2CBus
     private I2CDevice m_tempSensor;//Declares the I2CDevice
-    private double m_temp;
+    private double m_temperature;
     
+    /**
+     * Constructor.
+     */
     public TMP102(){
         try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);//Connects the bus
@@ -35,15 +38,24 @@ public class TMP102 {
         }
     }
     
+    /**
+     * Updates the registers on the I2C Thermometer.
+     */    
     public void read(){
         try {
-            m_temp = m_tempSensor.read(0);
+            byte[] buffer = new byte[2];//Declares a buffer which will hold the ITG3200 data
+            m_tempSensor.read(0x00, buffer, 0, 2);//Reads data into the buffer
+            m_temperature = buffer[0] + (0.0625 * (buffer[1]>>4));
         } catch (IOException ex) {
             Logger.getLogger(TMP102.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    /**
+     * Returns the most current value from the thermometer's temperature register since the read() function was called.
+     * @return The most current value from the thermometer's temperature register.
+     */
     public double getTemp(){
-        return m_temp;
+        return m_temperature;
     }
 }

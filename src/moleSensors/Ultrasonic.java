@@ -8,32 +8,45 @@ package moleSensors;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.gpio.PinMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static moleResources.moleResources.gpio;
+import static moleResources.MoleResources.gpio;
 
 /**
- *
- * @author mallory
+ * Ultrasonic Ping))) Sensor.
+ * @author Mr. Mallory
  */
 public class Ultrasonic {
     
     private GpioPinDigitalInput pingChannel;
     private GpioPinDigitalOutput echoChannel;
-    
-    public Ultrasonic(Pin pingChannel, Pin echoChannel){
-        this.pingChannel = gpio.provisionDigitalInputPin(pingChannel);
-        this.echoChannel = gpio.provisionDigitalOutputPin(echoChannel);
+    private Pin pin;
+    private double inches;
+    /**
+     * Constructor.
+     * @param pingChannel Ping Input Channel.
+     */
+    public Ultrasonic(Pin pingChannel){
+        pin = pingChannel;
+        this.pingChannel = gpio.provisionDigitalInputPin(pin);
+        this.echoChannel = gpio.provisionDigitalOutputPin(pin);
     }
     
-    public double getRange(){
+    /**
+     * Updates the reading on the Ultrasonic Ping Sensor.
+     */    
+    public void read(){
         try {
+            echoChannel.low();
+            Thread.sleep(2);
             echoChannel.high();
-            Thread.sleep(20);
+            Thread.sleep(5);
+            echoChannel.low();
         } catch (InterruptedException ex) {
             Logger.getLogger(Ultrasonic.class.getName()).log(Level.SEVERE, null, ex);
         }
-        echoChannel.low();
+        this.pingChannel = gpio.provisionDigitalInputPin(pin);
         double startTime = System.currentTimeMillis();
         double stopTime = 0;
         do {
@@ -43,16 +56,20 @@ public class Ultrasonic {
             }
         } while (!pingChannel.isHigh());
         
-        double result;
-        
-        if ((stopTime - startTime) <= 38) {
-            result = (stopTime - startTime) * 165.7;
+        if ((stopTime - startTime) <= 40) {
+            inches = (stopTime - startTime)/343*2.54/1000;
         }else{
             System.out.println("Timed out");
-            result = -1;
+            inches = -1;
         }
-        
-        return result;
+    }
+    
+    /**
+     * Returns the most current value from the ultrasonic sensor in inches since the read() function was called.
+     * @return The most current value from the ultrasonic sensor in inches.
+     */
+    public double getInches(){
+        return inches;
     }
 }
 

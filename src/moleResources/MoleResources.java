@@ -14,20 +14,29 @@ import java.util.logging.Logger;
 import moleUtil.FileLogger;
 
 /**
- *
- * @author mallory
+ * Static Object Container.
+ * @author Mr. Mallory
  */
-public class moleResources {
+public class MoleResources {
     
+    /**
+     * Default GPIO Controller.
+     */
     public static GpioController gpio;
+    /**
+     * Default FileLogger.
+     */
     public static FileLogger m_log;
     
+    /**
+     * Must be run before other members of the class is ran, Initializes the GPIO and FileLogger.
+     */
     public static void init(){
         gpio = GpioFactory.getInstance();
         try {
             m_log = new FileLogger(new Date().toString());
         } catch (IOException ex) {
-            Logger.getLogger(moleResources.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MoleResources.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * One Wire Temperature Sensor
  * @author Mr. Mallory
  */
 public class DS18B20 {
@@ -24,6 +24,9 @@ public class DS18B20 {
     private static int sensorNumber = 0;
     private double temp = 0;
     
+    /**
+     * Constructor.
+     */
     public DS18B20(){
         File masterDirectory = new File("/sys/bus/w1/devices/");
         String[] files = masterDirectory.list();
@@ -47,11 +50,18 @@ public class DS18B20 {
         }
         sensorNumber++;
     }
-    
+
+    /**
+     * Returns the most current value from the thermometer's temperature register since the read() function was called.
+     * @return The most current value from the thermometer's temperature register.
+     */
     public double getTemp(){
         return temp;
     }
     
+    /**
+     * Updates the registers on the One Wire Temperature Sensor.
+     */
     public void read(){
         try {
             byte[] buffer = new byte[temperatureSensorInput.available()];

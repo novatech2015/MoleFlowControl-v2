@@ -12,7 +12,7 @@ import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 
 /**
- *
+ * I2C Gyro.
  * @author Mr. Mallory
  */
 public class ITG3200 {
@@ -22,6 +22,9 @@ public class ITG3200 {
     private double x_axis = 0.0, y_axis = 0.0, z_axis = 0.0;//Initializes variables
     private final double kLSBPerDegreePerSecond = 14.375;//Scalar value for ITG3200 Output
     
+    /**
+     * Constructor.
+     */
     public ITG3200(){
 	try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);//Connects the bus
@@ -42,6 +45,9 @@ public class ITG3200 {
             }
     }
     
+    /**
+     * Updates the registers on the I2C Gyro.
+     */    
     public void read(){
         try {
             byte[] buffer = new byte[6];//Declares a buffer which will hold the ITG3200 data
@@ -57,17 +63,26 @@ public class ITG3200 {
 	}
     }
     
-    //Returns the last value from the x Axis
+    /**
+     * Returns the most current value from the gyro's x axis register since the read() function was called.
+     * @return The most current value from the gyro's x axis register.
+     */
     public double getX(){
 	return x_axis;
     }
     
-    //Returns the last value from the y Axis
+    /**
+     * Returns the most current value from the gyro's y axis register since the read() function was called.
+     * @return The most current value from the gyro's y axis register.
+     */
     public double getY(){
     	return y_axis;
     }
     
-    //Returns the last value from the z Axis
+    /**
+     * Returns the most current value from the gyro's z axis register since the read() function was called.
+     * @return The most current value from the gyro's z axis register.
+     */
     public double getZ(){
     	return z_axis;
     }

@@ -6,10 +6,23 @@
 
 package moleModules;
 
+import com.pi4j.io.gpio.Pin;
+
 /**
  *
  * @author Mr. Mallory
  */
-public class moleDrive {
+public class MoleHatch {
     
+    public MoleHatch(Pin pinNumber){
+        
+    }
+    
+    public void release(){
+        
+    }
+    
+    public boolean isSet(){
+        return true;
+    }
 }

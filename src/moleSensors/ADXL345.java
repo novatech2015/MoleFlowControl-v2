@@ -5,7 +5,7 @@ import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 /**
- *
+ * I2C Accelerometer.
  * @author Mr. Mallory
  */
 
@@ -16,25 +16,25 @@ public class ADXL345 {
     private double x_axis = 0.0, y_axis = 0.0, z_axis = 0.0;//Initializes variables
     private final double kGsPerLSB = 0.004;//Scalar value for ADXL345 Output
 
+    /**
+     * Constructor.
+     */
     public ADXL345(){
         try {
             bus = I2CFactory.getInstance(I2CBus.BUS_0);//Connects the bus
             System.out.println("Bus Connected");
             
-            m_accel = bus.getDevice(0xA6);//Gets device on the bus 
-            //Try 0x53 if not successful
-            //Try 0x3A if not successful
-            //Try 0x1D if not successful
+            m_accel = bus.getDevice(0x53);
             System.out.println("ADXL345 Connected");
-
-            m_accel.write(0x2C, (byte) 0x08);//Configures the BW_Rate to operate at 25 Hertz
-            m_accel.write(0x31, (byte) 0x0B);//Configures the DATA_FORMAT to operate in FULL_RES with a range of +/- 16g
             m_accel.write(0x2D, (byte) 0x08);//Configures the POWER_CTL to start measuring
 	} catch (IOException e) {
             System.out.println(e);
 	}
     }
 
+    /**
+     * Updates the registers on the I2C Accelerometer.
+     */
     public void read(){
         try {
             byte[] buffer = new byte[6];//Declares a buffer which will hold the ADXL345 data
@@ -50,17 +50,26 @@ public class ADXL345 {
 	}
     }
     
-    //Returns the last value from the x Axis
+    /**
+     * Returns the most current value from the accelerometer's x axis register since the read() function was called.
+     * @return The most current value from the accelerometer's x axis register.
+     */
     public double getX(){
 	return x_axis;
     }
     
-    //Returns the last value from the y Axis
+    /**
+     * Returns the most current value from the accelerometer's y axis register since the read() function was called.
+     * @return The most current value from the accelerometer's y axis register.
+     */
     public double getY(){
     	return y_axis;
     }
     
-    //Returns the last value from the z Axis
+    /**
+     * Returns the most current value from the accelerometer's z axis register since the read() function was called.
+     * @return The most current value from the accelerometer's z axis register.
+     */
     public double getZ(){
     	return z_axis;
     }

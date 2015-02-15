@@ -11,13 +11,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- *
+ * File Logger.
  * @author Mr. Mallory
  */
 public class FileLogger {
     
-    File m_file;
-    FileWriter m_fileOut;
+    private File m_file;
+    private FileWriter m_fileOut;
+    
+    /**
+     * Constructor.
+     * @param name Name of File
+     * @throws IOException 
+     */
     public FileLogger(String name) throws IOException{
         m_file = new File(name);
         if(!m_file.exists()){
@@ -29,11 +35,20 @@ public class FileLogger {
         m_fileOut = new FileWriter(m_file);
     }
     
+    /**
+     * Writes string to file.
+     * @param value The string to write to the file.
+     * @throws IOException 
+     */
     public void write(String value) throws IOException{
         m_fileOut.write(value);
         m_fileOut.flush();
     }
     
+    /**
+     * Closes the file connection.
+     * @throws IOException 
+     */
     public void close() throws IOException{
         m_fileOut.close();
     }

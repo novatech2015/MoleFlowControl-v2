@@ -8,10 +8,10 @@ package moleActuators;
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
-import static moleResources.moleResources.gpio;
+import static moleResources.MoleResources.gpio;
 
 /**
- *
+ * Deprecated Motor Control Class, use I2CMotorController.
  * @author Mr. Mallory
  */
 public class PWMMotorController {
@@ -24,6 +24,10 @@ public class PWMMotorController {
     private boolean running = false;
     private GpioPinDigitalOutput signalPin;
     
+    /**
+     * Constructor.
+     * @param pinNumber The pin the motor is attached to.
+     */
     public PWMMotorController(Pin pinNumber){
         signalPin = gpio.provisionDigitalOutputPin(pinNumber);
         
@@ -32,6 +36,10 @@ public class PWMMotorController {
         
     }
     
+    /**
+     * Method for controlling relative motor power and direction.
+     * @param power A relative motor power and direction between -1 and 1 with -1 being CCW and 1 being CW.
+     */
     public void setPower(double power){
         power = getSign(power) * Math.min(Math.abs(power),1);//Caps power at 1 / -1
         if(power > 0){
@@ -44,12 +52,18 @@ public class PWMMotorController {
         this.power = power;
     }
     
+    /**
+     * Enables motor control.
+     */
     public void start(){
         currentCycle = cycle;
         lastTime = System.nanoTime();
         running = true;
     }
     
+    /**
+     * Disables motor control.
+     */
     public void stop(){
         running = false;
     }
@@ -66,6 +80,10 @@ public class PWMMotorController {
         return sign;
     }
     
+    /**
+     * Returns whether the motor is enabled or disabled.
+     * @return Whether the motor is enabled or disabled.
+     */
     public boolean isRunning(){
         return running;
     }

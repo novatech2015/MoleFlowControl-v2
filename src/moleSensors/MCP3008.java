@@ -9,10 +9,10 @@ package moleSensors;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
-import static moleResources.moleResources.gpio;
+import static moleResources.MoleResources.gpio;
 
 /**
- *
+ * Analog-to-Digital Converter.
  * @author Mr. Mallory
  */
 public class MCP3008 {
@@ -22,6 +22,13 @@ public class MCP3008 {
     private GpioPinDigitalOutput outputPin;
     private GpioPinDigitalOutput slaveSelectPin;
     
+    /**
+     * Constructor.
+     * @param clock SPI Clock Pin.
+     * @param input SPI Input Pin.
+     * @param output SPI Output Pin.
+     * @param slaveSelect SPI SlaveSelect Pin.
+     */
     public MCP3008(Pin clock, Pin input, Pin output, Pin slaveSelect){
         clockPin = gpio.provisionDigitalOutputPin(clock);
         inputPin = gpio.provisionDigitalInputPin(input);
@@ -29,6 +36,11 @@ public class MCP3008 {
         slaveSelectPin = gpio.provisionDigitalOutputPin(slaveSelect);
     }
     
+    /**
+     * Reads an analog voltage from the MCP3008 Module from one of its 8 module [0:7], the max return value is 2^10-1 or 1023.
+     * @param channel MCP3008 Analog Source Channel [0:7].
+     * @return An analog voltage from the appropriate channel in the range [0:1023].
+     */
     public int readChannel(int channel){
         int output = 0;
         int i;

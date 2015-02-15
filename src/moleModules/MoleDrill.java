@@ -6,10 +6,27 @@
 
 package moleModules;
 
+import com.pi4j.io.gpio.Pin;
+
 /**
  *
  * @author Mr. Mallory
  */
-public class moleHatch {
+public class MoleDrill {
     
+    public MoleDrill(Pin pinNumber){
+        
+    }
+    
+    public void setOn(){
+        
+    }
+    
+    public void setOff(){
+        
+    }
+    
+    public void setSpeed(){
+        
+    }
 }

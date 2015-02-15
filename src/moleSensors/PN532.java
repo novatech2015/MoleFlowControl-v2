@@ -6,11 +6,12 @@
 
 package moleSensors;
 
+import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 
 /**
- *
+ * INCOMPLETE
  * @author Mr. Mallory
  */
 public class PN532 {
@@ -18,7 +19,7 @@ public class PN532 {
     private I2CBus bus;//Declares the I2CBus
     private I2CDevice m_transceiver;//Declares the I2CDevice
     
-    public PN532(){
+    public PN532(Pin irqPin){
         
     }
     

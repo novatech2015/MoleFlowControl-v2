@@ -12,7 +12,7 @@ import com.pi4j.io.i2c.I2CFactory;
 import java.io.IOException;
 
 /**
- *
+ * I2C Thermopile.
  * @author Mr. Mallory
  */
 public class D6T44L {
@@ -23,6 +23,9 @@ public class D6T44L {
     private int referenceTemp;
     private int errorCheckCode;
     
+    /**
+     * Constructor.
+     */
     public D6T44L(){
         try {
             bus = I2CFactory.getInstance(I2CBus.BUS_0);//Connects the bus
@@ -36,6 +39,9 @@ public class D6T44L {
 	}
     }
     
+    /**
+     * Updates the registers on the I2C Thermopile.
+     */
     public void read(){
         try {
             byte[] buffer = new byte[6];//Declares a buffer which will hold the ADXL345 data
@@ -66,14 +72,26 @@ public class D6T44L {
 	}
     }
     
+    /**
+     * Returns the most current array from the thermopile's registers since the read() function was called.
+     * @return The most current value from the barometer's pressure register.
+     */
     public int[] getArray(){
         return thermalArray;
     }
     
+    /**
+     * Returns the most recent error code from thermopile's error register since the read() function was called.
+     * @return The most recent error code from thermopile's error register.
+     */
     public int getErrorCode(){
         return errorCheckCode;
     }
     
+    /**
+     * Returns the most current reference temperature since the read() function was called.
+     * @return The most current reference temperature since the read() function was called.
+     */
     public int getReferenceTemp(){
         return referenceTemp;
     }
